@@ -1,0 +1,42 @@
+
+<%- include('../partials/header.ejs') %>
+
+<div style="max-width: 500px; 
+            margin: 30px auto;
+            padding: 10px;
+            border-radius: 15px;
+            color:#ffc107;
+            background-color: #757170;">
+            <div>
+              <h3 style="background-color: #212529;
+                        text-align: center;
+                        border-radius: 15px;
+                        width: 300px;" >Ingreso de usuario</h3>
+            </div>
+  <form id="formLogIn"onsubmit="tomarDatos()" method="post">
+      <div class="mb-3">
+          <label class="form-label">User Name</label>
+          <input class="form-control" id="usuario">
+      </div>
+      <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-control" id="contrasenia">
+      </div>
+      <div style="text-align:center;">
+        <button 
+        style="margin-bottom: 10px" 
+        type="submit" 
+        value="logIn" 
+        class="btn btn-warning text-align: center">
+        Log in
+        </button>
+      </div>
+      <hr>
+      <form action="/">
+        <div class="text-center"></div>
+            <button class="btn btn-success my-3">Back to home</button>
+        </div>
+      </form>
+  </form>
+</div>
+<%- include('../partials/footer.ejs') %>

@@ -1,0 +1,40 @@
+<%- include('../partials/header.ejs') %>
+<div class="container">
+    <h3 style="
+    color:#ffc107; 
+    background-color: #212529; 
+    padding-bottom: 8px;
+    margin-top: 20px;
+    border-radius: 10px;
+    text-align: center;">Carrito</h3>
+</div>
+
+<% if (carrito.length > 0){ %> 
+    
+    <% carritoSinDuplicados.forEach((carrito) => { %>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <img style="width: 30px; height: 30px;" src= <%=carrito.url  %> >
+            </div>
+            <div class="col">
+                <p><%=carrito.name %></p>
+            </div>
+            <div class="col">
+                <p>$<%=carrito.precio  %></p>
+            </div>
+            <div class="col">
+                <button class="btn btn-danger">Eliminar</button>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <% }) %>
+<% } else { %>
+    <div class="container">
+        <h5 class="alert alert-warning" style="text-align: center; padding: 15px;">No hay productos en el carrito</h5>
+    </div>
+<% } %>
+
+<%- include('../partials/footer.ejs') %>
+

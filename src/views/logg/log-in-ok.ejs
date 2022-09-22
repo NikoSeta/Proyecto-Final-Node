@@ -1,0 +1,14 @@
+<%- include('../partials/header.ejs') %>
+<div class="container text-center my-3">
+    <div class="jumbotron" style="background-color: green;color: white;">
+        <h2><i>Bienvenido <%= ${usesrname} %></i></h2>
+        <br>
+        <h3>Nombre: <%= ${firstName} %></h3>
+        <h3>Apellido: <% ${lastName} %></h3>
+        <h3>Email: <$ ${email} %></h3>
+        <% function redirect(pagina) { location.href = pagina; } %>
+        <% function logout() { redireccionar('/logout') } %>
+        <button class="btn btn-danger my-5" onclick="logout()">LOGOUT</button>
+    </div>
+</div>
+<%- include('../partials/footer.ejs') %>

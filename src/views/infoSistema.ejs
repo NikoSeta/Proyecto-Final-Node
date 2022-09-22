@@ -1,0 +1,29 @@
+<%- include('./partials/header.ejs') %>
+
+<div class="container">
+    <h1 style="
+    margin-top: 35px;
+    text-align: center;
+    color:#ffc107; 
+    background-color: #212529; 
+    padding-bottom: 8px;
+    border-radius: 10px;">Info del servidor</h1>
+    
+    <% if (infoNode.length > 0){ %> 
+        <div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Argumentos de entrada: <b><%=infoNode[0] %></b></li>
+                <li class="list-group-item">Direccion actual del trabajo: <b><%=infoNode[1] %></b></li>
+                <li class="list-group-item">Id del proceso: <b><%=infoNode[2] %></b></li>
+                <li class="list-group-item">Version de node: <b><%=infoNode[3] %></b></li>
+                <li class="list-group-item">Titulo del proceso: <b><%=infoNode[4] %></b></li>
+                <li class="list-group-item">Sistema operativo: <b><%=infoNode[5] %></b></li>
+                <li class="list-group-item">Uso de la memoria: <b><%=infoNode[6] %></b></li>
+              </ul>
+        </div>
+    <% } else { %>
+        <p class="aler alert-warning">No se encontró info</p>
+    <% } %>
+</div>
+
+<%- include('./partials/footer.ejs') %>

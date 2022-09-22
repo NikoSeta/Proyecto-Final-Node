@@ -1,0 +1,12 @@
+<%- include('../partials/header.ejs') %>
+
+<div class="container text-center my-3">
+    <div class="jumbotron" style="background-color: salmon;color: white;">
+        <h1>USER ERROR SIGNUP</h1>
+        <% function redirect(pagina) { location.href = pagina; }  %>
+        <% function back() { redirect('/') } %>
+        <button class="btn btn-warning my-5" onclick="back()">VOLVER</button>
+    </div>
+</div>
+
+<%- include('../partials/footer.ejs') %>
