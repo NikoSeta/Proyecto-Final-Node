@@ -14,7 +14,7 @@ const { TIEMPO_EXPIRACION } = require('./src/config/globals')
 const mensajesModel = require('./src/models/mensajesMongo');
 const messages = mensajesModel;
 //Puerto
-const { PORT } = require ('./src/config/globals');
+const { PORT } = require ('./src/config/globals') || process.env.PORT;
 //Routs
 const routerCart = require('./src/routes/carrito');
 const routerProd = require('./src/routes/productos');

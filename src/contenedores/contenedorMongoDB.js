@@ -13,7 +13,7 @@ class ContenedorMongoDB {
 
     async createProd(){
         const productoSaveModel = new model.productos(productos);
-        let productsSave = await productoSaveModel.save();
+        let productsSave = await model.productos.save();
         console.log(productsSave);
     }
 
@@ -31,19 +31,19 @@ class ContenedorMongoDB {
     }
 
     async update(content) {
-        let contentArray = await this.getAll();
+        let contentArray = this.getAll();
         let index = contentArray.find(elem => {
             return elem.id === content.id;
         });
 
         if (index != -1) {
-            let usuarioUpdate = this.model.updateOne(
+            let newProducto = await model.productos.updateOne(
                 {"name": content.name},
                 {"price": content.price},
                 {"img": content.img},
                 {"stock": content.stock}
             );
-            console.log("Nuevo producto cargado:" + usuarioUpdate);
+            console.log("Nuevo producto cargado:" + newProducto);
         }
         return content;
     }
@@ -52,8 +52,8 @@ class ContenedorMongoDB {
         let productosArray = this.getAll();
       
         if(productos.length > 0) {
-            let usuarioDelete = await model.usuarios.deleteOne(elem => elem.id != id);
-            console.log(usuarioDelete);
+            let productDelete = await model.productos.deleteOne(elem => elem.id != id);
+            console.log(productDelete);
         }
         return productosArray
     }
