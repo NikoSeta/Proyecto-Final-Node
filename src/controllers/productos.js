@@ -1,32 +1,66 @@
-const prodModel = require('../models/productosMongo');
-const ContenedorMongoDB = require ('../contenedores/contenedorMongoDB');
-const contenedor = new ContenedorMongoDB(prodModel);
+const storage = require(`../daos/index`);
 
-async function verProductos(req, res) {
-    let products = await contenedor.getAll();
-    res.render('product/productos',{
-        products: products
-    });  
-};
+let rutaError = 'routing-err'
 
-async function verUnProducto(req, res) {
+const productsStorage = storage().productos;
+
+const addProduct = async (req, res) => {
     try {
-        let idProd = req.params.id;
-        let producto = await contenedor.getById( idProd );
+        const name = req.body.nombre;
+        const price = Number(req.body.precio);
+        const url = req.body.thumbnail;
+        const description = req.body.descripcion;
+        const date = new Date().toDateString();
+        const code = Number(req.body.codigo);
+        const stock = Number(req.body.stock);
 
-        if (!producto) {
-            console.log(error, `Producto con ID: ${idProd} no encontrado`);
+        const newProducto = {
+            timestamp: date,
+            nombre: `${name}`,
+            descripcion: `${description}`,
+            codigo: code,
+            thumbnail: `${url}`,
+            precio: price,
+            stock: stock
+        };
+        const id = await productsStorage.save(newProducto);
+
+        return res.json(`Se agregó el nuevo producto`);
+    } catch (err) {
+        res.render(rutaError)
+    }
+}
+
+const getAllProducts = async (req, res) => {
+    try {
+        let allProducts = await productsStorage.getAll();
+        res.render('product/listaProductos', {
+            products: allProducts
+        })
+    } catch (err) {
+        res.render('product/listaProductos')
+    }
+}
+
+const getProductById = async (req, res) => {
+    try {
+        let idCart = req.params.id;
+        let productbyId = await productsStorage.getById(idCart);
+
+        if (!productbyId) {
+            res.render(rutaError)
         } else {
-            res.render('/product/productos', {
-                product: producto
+            res.render('product/listaProd', {
+                product: productbyId
             })
         }
     } catch (err) {
-        console.log('No se encuentra productos');
+        res.render(rutaError)
     }
-};
+}
 
-const updateById = async (req, res) => {
+const updateProductById = async (req, res) => {
+    res.render('product/agregarProducto')
     try {
         const idProduct = req.params.id;
         const name = req.body.nombre;
@@ -34,56 +68,29 @@ const updateById = async (req, res) => {
         const img = req.body.thumbnail;
         const date = new Date().toDateString();
         const stock = Number(req.body.stock);
-        const productoUpdate = await contenedor.updateById(idProduct, name, price, img, date, stock);
-        res.render('/product/productos', {
-            product : productoUpdate
+        await productsStorage.updateById(idProduct, name, price, img, date, stock);
+        res.render('product/listaProd', {
+            product: productbyId
         })
     } catch (err) {
-        console.log(`Error al actualizar un producto ${err}`)
+        res.render(rutaError)
     }
-};
+}
 
-async function agregarProd (req, res){
-    try {
-        const name = req.body.nombre;
-        const price = Number(req.body.precio);
-        const img = req.body.thumbnail;
-        const date = new Date().toDateString();
-        const stock = Number(req.body.stock);
-
-        const newProducto = {
-            timestamp: date,
-            nombre: `${name}`,
-            thumbnail: `${img}`,
-            precio: price,
-            stock: stock
-        };
-        const id = await contenedor.update(newProducto)
-        res.redirect('/product/productos')
-        console.log(req.body);
-    } catch (err) {
-        console.log(`Error al crear un producto ${err}`);
-    }
-};
-
-
-async function borrarUnProd(req, res) {  
+const deleteProductById = async (req, res) => {
     try {
         const id = req.params.id;
-        await contenedor.delete( req.id );
-        res.render('/product/productos', {
-            product: producto
-        })
-        console.log(`Se eliminó de forma correcta el prodcuto con ID:${id}`);
+        await productsStorage.deleteById(id);
+        return res.json(`Se eliminó de forma correcta el ID:${id}`);
     } catch (err) {
-        console.log(`Error al borrar un producto por id ${err}`);
+        res.render(rutaError)
     }
 }
 
 module.exports = {
-    verProductos,
-    agregarProd,
-    verUnProducto,
-    borrarUnProd,
-    updateById
+    getAllProducts,
+    getProductById,
+    addProduct,
+    updateProductById,
+    deleteProductById,
 };

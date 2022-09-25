@@ -1,3 +1,30 @@
 <%- include('./partials/header.ejs') %>
-<%- include('./productos/prodMock.ejs') %>
+
+<div style="margin-right: 50px; margin-left: 50px;">
+    <h2 style="
+        margin-top: 35px;
+        text-align: center;
+        color:#ffc107; 
+        background-color: #212529; 
+        padding-bottom: 8px; 
+        margin-bottom: 0px;
+        border-radius: 10px 10px 0px 0px;"> Ofertas</h2>
+    <% if (products.length > 0){ %> 
+        <div style="display:flex; flex-direction: row"> 
+            <%for(products of products){ %>       
+            <div class="card" style="width: 18rem;">
+                <img style="width: 220px; height: 220px;" src= <%=products.img  %> >
+                <div class="card-body">
+                    <h5><%=products.name %></h5>
+                    <p class="card-text">Descripción</p>
+                    <p class="card-text">$<%=products.price %></p>
+                    <button class="btn btn-warning">Coomprar</button>
+                </div>
+            </div>
+        <% } %>
+    <% } else { %>
+        <p class="aler alert-warning">No se encontró productos</p>
+    <% } %>
+</div>
+
 <%- include('./partials/footer.ejs') %>

@@ -8,7 +8,8 @@
         background-color: #212529; 
         padding-bottom: 8px;
         border-radius: 10px;">Cargar Productos</h3>
-            <form class="prod-form" id="add" action="/productos" method="POST">
+        
+            <form class="prod-form" id="formAddProduct"onsubmit="agregarProducto()" method="post">
                 <div class="d-flex flex-column align-items-center">
                     <input type="text" name="name" class="form-control" placeholder="Producto" style="margin-bottom: 10px;">
                     <input type="text" name="price" class="form-control" placeholder="Precio" style="margin-bottom: 10px;">
@@ -28,22 +29,27 @@
                 margin-bottom: 0px;
                 border-radius: 10px 10px 0px 0px;"> Lista de Productos</h2>
             <% if (products.length > 0){ %> 
-                <table class="table table-dark table-hover">
-                    <tr>
-                        <th><p>Producto</p></th>
-                        <th><p>Precio</p></th>
-                        <th><p>Foto</p></th>
-                        <th></th>
-                    </tr>
-                    <%for(products of products){ %>
-                     <tr>
-                         <td><p><%=products.name %></p></td>
-                         <td><p>$<%=products.price  %></p></td>
-                         <td><img style="width: 55px; height: 55px;" src= <%=products.img  %> ></td>
-                         <td><button type="button" class="btn btn-warning">Comprar</button></td>
-                     </tr>
-                    <% } %> 
-                </table>
+                <div class="container">
+    <div>
+        <h2 style="
+        margin-top: 35px;
+        text-align: center;
+        color:#ffc107; 
+        background-color: #212529; 
+        padding-bottom: 8px; 
+        margin-bottom: 0px;
+        border-radius: 10px 10px 0px 0px;"> Lista de Productos
+        </h2>
+
+    <div class="card" style="width: 18rem;">
+        <img style="width: 220px; height: 220px;" src= <%=product.img  %> >
+        <div class="card-body">
+            <h5><%=product.name %></h5>
+            <p class="card-text">Descripción</p>
+            <button class="btn btn-warning">Coomprar</button>
+        </div>
+    </div>
+</div>
             <% } else { %>
                 <p class="aler alert-warning">No se encontró productos</p>
             <% } %>

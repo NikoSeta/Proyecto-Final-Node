@@ -1,29 +1,24 @@
 <%- include('../partials/header.ejs') %>
 <div class="container">
-    <h2 style="
+    <div>
+        <h2 style="
         margin-top: 35px;
         text-align: center;
         color:#ffc107; 
         background-color: #212529; 
         padding-bottom: 8px; 
         margin-bottom: 0px;
-        border-radius: 10px 10px 0px 0px;"> Lista de Productos</h2>
-<%for(products of products){ %>
-<div class="card" style="width: 18rem;">
-    <img class="card-img-top" alt="..." src= <%=products.url  %>>
-    <div class="card-body">
-        <h5><%=products.name %></h5>
-      <p class="card-text"><%=products.name %></p>
-      <button class="btn btn-warning">Coomprar</button>
+        border-radius: 10px 10px 0px 0px;"> Lista de Productos
+        </h2>
+
+    <div class="card" style="width: 18rem;">
+        <img style="width: 220px; height: 220px;" src= <%=product.img  %> >
+        <div class="card-body">
+            <h5><%=product.name %></h5>
+            <p class="card-text">Descripción</p>
+            <button class="btn btn-warning">Coomprar</button>
+        </div>
     </div>
-
-<% } %>
 </div>
-<% } else { %>
-    <p class="aler alert-warning">No se encontró productos</p>
-<% } %>
-</div>
-
-
 
 <%- include('../partials/footer.ejs') %>

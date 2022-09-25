@@ -1,4 +1,4 @@
-const { mongoUri } = require ('../config/globals');
+const { mongoUri } = require ('../../config/globals');
 const mongoose = require('mongoose');
 
 const iniciarMongo = mongoose.connect(`${mongoUri}`, {

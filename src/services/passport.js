@@ -62,15 +62,5 @@ function signUpUser() {
         }
     ))
 }
-
-
-
-passport.serializeUser((user, done) => {
-    done(null, user._id);
-});
-  
-passport.deserializeUser((id, done) => {
-    User.findById(id, done);
-});
   
 module.exports = {logInUser, signUpUser}

@@ -6,12 +6,14 @@ const { Server: HttpServer } = require('http');
 const { Server:IOServer } = require('socket.io');
 const httpServer = new HttpServer(app);
 const io = new IOServer(httpServer);
+//Session
 const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const { TIEMPO_EXPIRACION } = require('./src/config/globals')
 
-const mensajesModel = require('./src/models/mensajesMongo');
+//Mensajería
+const mensajesModel = require('./src/dataBase/models/mensajesMongo');
 const messages = mensajesModel;
 //Puerto
 const { PORT } = require ('./src/config/globals') || process.env.PORT;
@@ -19,11 +21,14 @@ const { PORT } = require ('./src/config/globals') || process.env.PORT;
 const routerCart = require('./src/routes/carrito');
 const routerProd = require('./src/routes/productos');
 const routerLog = require('./src/routes/session');
+const homeProd = require('./src/routes/home');
 
-const { infoNode } = require('./src/models/infoSistema');
+const { infoNode } = require('./src/dataBase/models/infoSistema');
 const { multiServer } = require('./src/services/cluster');
-const { iniciarMongo } = require('./src/daos/connectMongoDB');
 
+//multiServer();
+
+//Session
 app.use(session({
     secret: 'keyboard cat',
     cookie: {
@@ -36,6 +41,15 @@ app.use(session({
     saveUninitialized: false
    }));
 
+passport.serializeUser((user, done) => {
+    done(null, user._id);
+});
+  
+passport.deserializeUser((id, done) => {
+    User.findById(id, done);
+});
+
+
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.set('view engine', 'ejs');
@@ -43,16 +57,23 @@ app.set('views', __dirname + '/src/views');
 app.use(express.static(__dirname + "/partial"));
 app.use(passport.initialize());
 app.use(passport.session());
-   
 
-iniciarMongo;
-//multiServer();
-
+app.use('/', homeProd);
 app.use('/session', routerLog);
 app.use('/cart', routerCart);
 app.use('/productos', routerProd);
-
-// CHAT SOCKET.IO
+app.get('/chat', (req, res)=>{
+    res.render('chat')
+});
+// INFO SISTEMA
+app.get('/info', (req, res)=>{
+    res.render('infoSistema', {infoNode: infoNode})
+});
+// Error 404
+app.get('*', (req, res) =>{
+    res.render('routing-err')
+});
+// Mensajería SOCKET.IO
 /*
 io.on('connection', (socket) => {
     console.log('Cliente conectado');
@@ -68,20 +89,6 @@ io.on('connection', (socket) => {
      });
 });
 */
-
-app.get('/chat', (req, res)=>{
-    res.render('chat')
-});
-
-// INFO SISTEMA
-app.get('/info', (req, res)=>{
-    res.render('infoSistema', {infoNode: infoNode})
-});
-
-// Error 404
-app.get('*', (req, res) =>{
-    res.render('routing-err')
-});
 
 // SERVIDOR ESCUCHANDO
 httpServer.listen(PORT, () => {
