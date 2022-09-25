@@ -4,7 +4,6 @@ const { Router } = express;
 const log = require('../controllers/session')
 const routerLog = Router();
 const { logInUser, signUpUser } = require ('../services/passport');
-const {sendMailNewUser} = require('../utils/mailer');
 
 logInUser();
 signUpUser();

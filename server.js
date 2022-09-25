@@ -9,7 +9,6 @@ const io = new IOServer(httpServer);
 //Session
 const session = require('express-session');
 const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
 const { TIEMPO_EXPIRACION } = require('./src/config/globals')
 
 //Mensajería
@@ -26,7 +25,9 @@ const homeProd = require('./src/routes/home');
 const { infoNode } = require('./src/dataBase/models/infoSistema');
 const { multiServer } = require('./src/services/cluster');
 
-//multiServer();
+//Creación de servidores con Cluster
+multiServer();
+
 //Session
 app.use(session({
     secret: 'keyboard cat',
@@ -74,7 +75,6 @@ app.get('*', (req, res) =>{
     res.render('routing-err')
 });
 // Mensajería SOCKET.IO
-/*
 io.on('connection', (socket) => {
     console.log('Cliente conectado');
     socket.emit('messages', messages);
@@ -88,7 +88,6 @@ io.on('connection', (socket) => {
         console.log('Cliente desconectado');
      });
 });
-*/
 
 // SERVIDOR ESCUCHANDO
 httpServer.listen(PORT, () => {

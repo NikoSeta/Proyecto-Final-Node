@@ -1,5 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const UserModel = require('../dataBase/models/usuariosMongo')
 
 function logInUser() {
     passport.use('logIn', new LocalStrategy(
@@ -8,17 +9,14 @@ function logInUser() {
                 if (err) {
                     return callback(err)
                 }
-    
                 if (!user) {
                     console.log('No se encontro usuario');
                     return callback(null, false)
                 }
-    
                 if(!validatePass(user, password)) {
                     console.log('Invalid Password');
                     return callback(null, false)
                 }
-    
                 return callback(null, user)
             })
         }
@@ -33,14 +31,11 @@ function signUpUser() {
                     console.log('Hay un error al registrarse');
                     return callback(err)
                 }
-    
                 if (user) {
                     console.log('El usuario ya existe');
                     return callback(null, false)
                 }
-    
                 console.log(req.body);
-    
                 const newUser = {
                     firstName: req.body.firstname,
                     lastName: req.body.lastname,
