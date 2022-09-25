@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-
+// Encrypta la constaseña del usuario
 function createHash(password) {
     return bcrypt.hashSync(
         password,

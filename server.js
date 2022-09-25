@@ -27,7 +27,6 @@ const { infoNode } = require('./src/dataBase/models/infoSistema');
 const { multiServer } = require('./src/services/cluster');
 
 //multiServer();
-
 //Session
 app.use(session({
     secret: 'keyboard cat',
@@ -39,7 +38,8 @@ app.use(session({
     rolling: true,
     resave: true,
     saveUninitialized: false
-   }));
+   })
+);
 
 passport.serializeUser((user, done) => {
     done(null, user._id);

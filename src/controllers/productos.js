@@ -1,6 +1,6 @@
 const storage = require(`../daos/index`);
 
-let rutaError = 'routing-err'
+let rutaError = 'routing-err';
 
 const productsStorage = storage().productos;
 

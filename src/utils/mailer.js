@@ -1,9 +1,11 @@
 const nodemailer = require('nodemailer');
 const MAIL_ADM = require('../config/globals');
 const CLIENT_ID = require('../config/globals');
-const  CLIENT_SECRET = require('../config/globals');
-const  REFRESH_TOKEN = require('../config/globals');
-const  ACCES_TOKEN = require('../config/globals');
+const CLIENT_SECRET = require('../config/globals');
+const REFRESH_TOKEN = require('../config/globals');
+const ACCES_TOKEN = require('../config/globals');
+const user = require('../dataBase/models/usuariosMongo');
+const productoCarrito = require('../dataBase/models/carritoMongo');
 
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -21,7 +23,7 @@ const transporter = nodemailer.createTransport({
 const mailNewUser = {
     from: 'Servidor de node.js',
     to: `${MAIL_ADM}`,
-    subject: 'Nuevo usuario',
+    subject: `${user.nombre}, compraste`,
     html:`<h1 style="margin-top: 35px;
             text-align: center;
             color:#ffc107;
@@ -29,7 +31,10 @@ const mailNewUser = {
             padding-bottom: 8px;
             border-radius: 10px;">
             Nuevo usuario creado
-        </h1>`
+        </h1>
+        <div>
+            <p>Bienvenido ${user.username} a productos Node</p>
+        </div>`
 }
 
 const mailNewSell = {
@@ -45,9 +50,10 @@ const mailNewSell = {
             border-radius: 10px;">
             Compraste en Productos Node
         </h1>
-        <h5 style="color: green">
-            ${producto.nombre}
-        </h5>`
+        <div style="color: green">
+        <p>${productoCarrito.name}</p>
+        <p>${productoCarrito.date}</p>
+        </div>`
 }
 
 async function sendMailNewUser() {
