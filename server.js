@@ -26,7 +26,7 @@ const { infoNode } = require('./src/dataBase/models/infoSistema');
 const { multiServer } = require('./src/services/cluster');
 
 //Creación de servidores con Cluster
-multiServer();
+//multiServer();
 
 //Session
 app.use(session({
@@ -62,7 +62,20 @@ app.use('/', homeProd);
 app.use('/session', routerLog);
 app.use('/cart', routerCart);
 app.use('/productos', routerProd);
+
 app.get('/chat', (req, res)=>{
+    // Mensajería SOCKET.IO
+    io.on('connection', (socket) => {
+        console.log('Cliente conectado');
+        socket.emit('messages', messages);
+        socket.on('new-message', data => {
+            messages.push(data);
+            io.sockets.emit('messages', messages);
+        })
+        socket.on('disconnect', function () {
+            console.log('Cliente desconectado');
+        });
+    });
     res.render('chat')
 });
 // INFO SISTEMA
@@ -73,20 +86,7 @@ app.get('/info', (req, res)=>{
 app.get('*', (req, res) =>{
     res.render('routing-err')
 });
-// Mensajería SOCKET.IO
-io.on('connection', (socket) => {
-    console.log('Cliente conectado');
-    socket.emit('messages', messages);
 
-    socket.on('new-message', data => {
-        messages.push(data);
-        io.sockets.emit('messages', messages);
-    })
-
-    socket.on('disconnect', function () {
-        console.log('Cliente desconectado');
-     });
-});
 
 // SERVIDOR ESCUCHANDO
 httpServer.listen(PORT, () => {

@@ -45,7 +45,7 @@ function getProfile (req, res) {
 //--DIRECCION DE FALLA LOG IN
 function getFaillogin (req, res) {
     console.log('error en login');
-    res.render('logg/log-in-err', {});
+    res.render('logg/log-in-err');
 }
 //--DIRECCION DE FALLA SIGN IN
 function getFailsignup (req, res) {

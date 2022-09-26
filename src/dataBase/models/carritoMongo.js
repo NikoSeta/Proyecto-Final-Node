@@ -11,4 +11,4 @@ const carritoSchema = new mongoose.Schema({
 
 const cartModel = mongoose.model(carritoCollection, carritoSchema);
 
-module.exports = cartModel;
+module.exports = {cartModel};
