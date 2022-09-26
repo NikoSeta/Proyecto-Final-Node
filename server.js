@@ -50,7 +50,6 @@ passport.deserializeUser((id, done) => {
     User.findById(id, done);
 });
 
-
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.set('view engine', 'ejs');
