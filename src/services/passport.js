@@ -57,5 +57,4 @@ function signUpUser() {
         }
     ))
 }
-  
 module.exports = {logInUser, signUpUser}

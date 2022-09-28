@@ -29,13 +29,12 @@ const addProduct = async (req, res) => {
 
 const getAllProducts = async (req, res) => {
     try {
-        let getAllProducts = await productsStorage.getAll();
-        res.render('product/listaProductos', {
-            products: getAllProducts
+        let productos = await productsStorage.getAll();
+        res.render('index', {
+            products: productos
         });
-        console.log(getAllProducts);
     } catch (err) {
-        res.render('product/listaProductos')
+        console.log(err);
     }
 }
 

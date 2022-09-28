@@ -1,5 +1,5 @@
-const iniciarMongo = require(`../../dataBase/mongo/connectMongoDB`);
-const productsModel = require(`../../dataBase/models/productosMongo`);
+const {iniciarMongo} = require(`../../dataBase/mongo/connectMongoDB`);
+const {productsModel} = require(`../../dataBase/models/productosMongo`);
 
 const CrudMongoDB = require(`../../dataBase/contenedores/contenedorProductos`);
 
