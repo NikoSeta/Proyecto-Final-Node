@@ -3,9 +3,12 @@
 <div class="container text-center my-3">
     <div class="jumbotron" style="background-color: red;color: white;">
         <h1>USER ERROR SIGNUP</h1>
-        <% function redirect(pagina) { location.href = pagina; }  %>
-        <% function back() { redirect('/') } %>
-        <button class="btn btn-warning my-5" onclick="back()">VOLVER</button>
+
+        <form action="/session">
+            <div class="text-center"></div>
+                <button class="btn btn-warning my-3">Back to home</button>
+            </div>
+        </form>
     </div>
 </div>
 

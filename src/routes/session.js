@@ -1,8 +1,8 @@
 const express = require('express');
 const passport = require('passport');
 const { Router } = express;
-const log = require('../controllers/session')
 const routerLog = Router();
+const log = require('../controllers/session')
 const { logInUser, signUpUser } = require ('../services/passport');
 
 logInUser();
@@ -24,6 +24,14 @@ routerLog.get('/logOut', log.getLogout);
 routerLog.get('/profileUser', log.getProfile);
 routerLog.get('/ruta-protegida', log.checkAuthentication, (req, res) => {
     res.render('protected')
+});
+
+//Passport-local
+passport.serializeUser((user, done) => {
+    done(null, user._id);
+});
+passport.deserializeUser((id, done) => {
+    User.findById(id, done);
 });
 
 module.exports = routerLog;

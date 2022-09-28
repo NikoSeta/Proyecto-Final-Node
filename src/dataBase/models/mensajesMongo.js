@@ -3,7 +3,7 @@ const mongoose = require ("mongoose");
 const mensajesCollection = 'mensajes';
 
 const mensajesSchema = new mongoose.Schema({
-    name: {type: String, required: true, max: 100},
+    username: {type: String, required: true, max: 100},
     age: {type: Number, required: true},
     alias: {type: String, required: true, max: 100},
     avatar: {type: String, required: true, max: 250},

@@ -1,6 +1,6 @@
 const mongoose = require ("mongoose");
 
-const carritoCollection = 'carrito';
+const carritoCollection = 'carritos';
 
 const carritoSchema = new mongoose.Schema({
     name: {type: String, required: true, max: 100},

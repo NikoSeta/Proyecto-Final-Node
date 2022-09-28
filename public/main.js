@@ -1,4 +1,23 @@
+
+// Session
+function logout() {
+    redireccionar('/logout')
+}
+
+
+//Socket.io
 const socket = io.connect();
+
+const chatForm = document.getElementById('chat-form')
+
+chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const msg = e.target.element.msg.value;
+    
+    socket.emit('chatMessage', msg);
+});
+
 
 function render(data) {
     const html = data.map((elem, index) => {

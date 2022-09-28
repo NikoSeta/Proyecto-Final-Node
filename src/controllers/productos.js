@@ -1,31 +1,27 @@
-const storage = require(`../daos/index`);
-
+const getStorage = require(`../daos/index`);
 let rutaError = 'routing-err';
-
-const productsStorage = storage().productos;
+const productsStorage = getStorage().productos;
 
 const addProduct = async (req, res) => {
     try {
         const name = req.body.nombre;
         const price = Number(req.body.precio);
-        const url = req.body.thumbnail;
-        const description = req.body.descripcion;
+        const img = req.body.thumbnail;
         const date = new Date().toDateString();
-        const code = Number(req.body.codigo);
         const stock = Number(req.body.stock);
 
         const newProducto = {
             timestamp: date,
             nombre: `${name}`,
-            descripcion: `${description}`,
-            codigo: code,
-            thumbnail: `${url}`,
+            thumbnail: `${img}`,
             precio: price,
             stock: stock
         };
         const id = await productsStorage.save(newProducto);
-
-        return res.json(`Se agregó el nuevo producto`);
+        let products = await productsStorage.getAll();
+        res.render('product/listaProductos', {
+            products: products
+        })
     } catch (err) {
         res.render(rutaError)
     }
@@ -33,10 +29,11 @@ const addProduct = async (req, res) => {
 
 const getAllProducts = async (req, res) => {
     try {
-        let allProducts = await productsStorage.getAll();
+        let getAllProducts = await productsStorage.getAll();
         res.render('product/listaProductos', {
-            products: allProducts
-        })
+            products: getAllProducts
+        });
+        console.log(getAllProducts);
     } catch (err) {
         res.render('product/listaProductos')
     }

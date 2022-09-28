@@ -18,7 +18,12 @@
                 <li class="list-group-item">Version de node: <b><%=infoNode[3] %></b></li>
                 <li class="list-group-item">Titulo del proceso: <b><%=infoNode[4] %></b></li>
                 <li class="list-group-item">Sistema operativo: <b><%=infoNode[5] %></b></li>
-                <li class="list-group-item">Uso de la memoria: <b><%=infoNode[6] %></b></li>
+                <li class="list-group-item">Uso de la memoria (rss): <b><%=infoNode[6].rss %></b></li>
+                <li class="list-group-item">Uso de la memoria (heapTotal): <b><%=infoNode[6].heapTotal %></b></li>
+                <li class="list-group-item">Uso de la memoria (heapUsed): <b><%=infoNode[6].heapUsed %></b></li>
+                <li class="list-group-item">Uso de la memoria (external): <b><%=infoNode[6].external %></b></li>
+                <li class="list-group-item">Uso de la memoria (arrayBuffers): <b><%=infoNode[6].arrayBuffers %></b></li>
+
               </ul>
         </div>
     <% } else { %>
