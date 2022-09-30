@@ -1,8 +1,7 @@
 const express = require('express');
-const { Router } = express;
 const carrito = require('../controllers/carrito');
-const routerCart = Router();
-const {sendMailForSell} = require('../utils/mailer');
+const routerCart = express.Router();
+
 
 // CARRITO
 routerCart.get('/', carrito.getAllProductsByIdCart);

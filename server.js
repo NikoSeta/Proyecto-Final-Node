@@ -111,6 +111,7 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((id, done) => {
     userModel.findById(id, done);
 });
+
 app.get('/productos', routerProd);
 app.get('/carrito', routerCart)
 
@@ -138,6 +139,7 @@ app.get('*', log.failRoute);
 app.get('/chat', (req, res)=>{
     io.on('connection', socket => {
         socket.emit('messages', 'Bienvenido usuario');
+        socket.emit('messages', messages);
         
         socket.broadcast.emit('messages', 'Usuario se ha conectado al chat')
 

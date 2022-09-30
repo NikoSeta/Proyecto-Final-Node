@@ -1,6 +1,6 @@
 
 const main = 'logg/main';
-const profile = 'logg/profile';
+const profile = 'profile';
 const login = 'logg/login';
 const signup = 'logg/signup';
 const logError = 'logg/login-err';
@@ -42,7 +42,7 @@ function postSignup (req, res) {
 function getProfile (req, res) {
     if (req.isAuthenticated()) {
         let user = req.user;
-        res.render(profile, { user: user, isUser:true })
+        res.render('logg/profile', { user: user, isUser:true })
     } else {
         res.redirect(login)
     }

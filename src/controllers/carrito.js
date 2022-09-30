@@ -1,4 +1,5 @@
 const storage = require(`../daos/index`);
+const { sendMailForSell } = require('../utils/mailer');
 
 let rutaError = 'routing-err';
 

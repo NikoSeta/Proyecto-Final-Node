@@ -1,21 +1,20 @@
 <%- include('../partials/header.ejs') %>
 
 <% if (isUser = true){ %>
-    <div class="container text-center my-3">
-        <div class="jumbotron" 
-             style="background-color: green;color: white;">
-            <h2><i>Bienvenido <%= user.username %></i></h2>
-            <br>
-            <h3>Nombre: <%= user.firstName %></h3>
-            <h3>Apellido: <%= user.lastName %></h3>
-            <h3>Email: <%= user.email %></h3>
-            <form action="/session">
-                <div class="text-center"></div>
-                    <button class="btn btn-warning my-5">LOGOUT</button>
-                </div>
-            </form>
+    <div class="container card mb-3">
+        <img class="card-img-top" style="height:100px" src="http://2.bp.blogspot.com/_xNY9-LKFq6g/TAy5zjzhYDI/AAAAAAAAAf0/1TYEM2gLFsA/s1600/cortinas-de-color.jpg" alt="Card image cap">
+        <div class="card-body">
+          <h3 class="card-title"><i>Bienvenido <%= user.username %></i></h3>
+          <p class="card-text">Nombre: <%= user.firstName %></p>
+          <p class="card-text">Apellido: <%= user.lastName %></p>
+          <p class="card-text">Email: <%= user.email %></p>
+          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+          <form action="/session">
+            <div class="text-center"></div>
+                <button class="btn btn-warning my-5">LOGOUT</button>
+            </div>
+        </form>
         </div>
-    </div>
 <% } %>
 
 <%- include('../partials/footer.ejs') %>
