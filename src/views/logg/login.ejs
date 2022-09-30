@@ -12,7 +12,7 @@
                         border-radius: 15px;
                         width: 300px;" >Ingreso de usuario</h3>
             </div>
-  <form id="formLogIn" action="/login" method="post">
+  <form id="form" role="form" action="/login" method="post" autocomplete="off">
       <div class="mb-3">
           <label class="form-label">User Name</label>
           <input name='username' placeholder="Nombre" class="form-control" type="text" required>
@@ -25,14 +25,14 @@
         <button 
         style="margin-bottom: 10px" 
         type="submit" 
-        value="logIn" 
+        value="Login" 
         class="btn btn-warning text-align: center">
         Log in
         </button>
       </div>
       <hr>
       <form action="/session">
-        <button class="btn btn-lg btn-success">Volve</button>
+        <button class="btn btn-lg btn-success">Back to Home</button>
     </form>
   </form>
 </div>

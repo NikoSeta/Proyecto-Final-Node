@@ -1,75 +1,81 @@
-const {sendMailNewUser} = require('../utils/mailer');
 
-//DIRECCION MAIN
+const main = 'logg/main';
+const profile = 'logg/profile';
+const login = 'logg/login';
+const signup = 'logg/signup';
+const logError = 'logg/login-err';
+const signError = 'logg/signup-err';
+const routError = 'routing-err';
+
 function getRoot(req, res) {
-    res.render('logg/main')
+    res.render(main)
 }
-//--DIRECCION LOG IN
+
 function getLogin(req, res) {
     if (req.isAuthenticated()) {
-        res.redirect('logg/profileUser')
+        res.redirect(profile)
     } else {
-        res.render('logg/login');
+        res.render(login);
     }
 }
-//DIRECCION SIGN UP
+
 function getSignup(req, res) {
-    res.render('logg/signup');
+    res.render(signup);
 }
-//DIRECCION DESPUES DE LOG IN
+
 function postLogin (req, res) {
     if (req.isAuthenticated()) {
-        sendMailNewUser()
-        res.redirect('logg/profileUser');
+        res.redirect(profile)
     } else {
-        res.redirect('logg/login')
+        res.redirect(login)
     }
 }
-//DIRECCION DESPUES DE SIGN IN
+
 function postSignup (req, res) {
     if (req.isAuthenticated()) {
-        res.redirect('logg/profileUser')
+        res.redirect(profile)
     } else {
-        res.redirect('logg/login')
+        res.redirect(login)
     }
 }
-//DIRECCION DEL PERFIL
+
 function getProfile (req, res) {
     if (req.isAuthenticated()) {
         let user = req.user;
-        res.render('logg/profileUser', { user: user, isUser:true })
+        res.render(profile, { user: user, isUser:true })
     } else {
-        res.redirect('login')
+        res.redirect(login)
     }
 }
-//DIRECCION DE FALLA LOG IN
+
 function getFaillogin (req, res) {
-    console.log('error en login');
-    res.render('logg/login-err');
+    console.log('logg/error en login');
+    res.render(logError, {});
 }
-//DIRECCION DE FALLA SIGN IN
+
 function getFailsignup (req, res) {
-    console.log('error en signup');
-    res.render('logg/signup-err');
+    console.log('logg/error en signup');
+    res.render(signError, {});
 }
-//DIRECCION DE LOG OUT
+
 function getLogout (req, res) {
     req.logout( (err) => {
         if (!err) {
-            res.render('index');
+            res.render(main);
         } 
     });
 }
-//DIRECCION DE ERROR 
+
 function failRoute(req, res){
-    res.status(404).render('logg/routing-err', {});
+    res.status(404).render(routError, {});
 }
-//AUTENTICACION DE USUARIO
+
 function checkAuthentication(req, res, next) {
     if (req.isAuthenticated()) {
+        //req.isAuthenticated() will return true if user is logged in
         next();
     } else {
-        res.redirect('logg/login');
+        res.redirect(login);
     }
 }
 
@@ -84,5 +90,5 @@ module.exports = {
     postSignup,
     getFailsignup,
     checkAuthentication,
-    getProfile   
+    getProfile
 }

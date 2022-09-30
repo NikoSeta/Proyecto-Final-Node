@@ -46,31 +46,33 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/src/views');
-app.use(express.static(__dirname + "/partial"));
+app.use(express.static(__dirname + '/public'));
 app.use(passport.initialize());
 app.use(passport.session());
 
 //Login de usuario existente
-passport.use('logIn', new LocalStrategy(
+passport.use('login', new LocalStrategy(
     (username, password, callback) => {
         userModel.findOne({ username: username }, (err, user) => {
             if (err) {
                 return callback(err)
             }
+
             if (!user) {
                 console.log('No se encontro usuario');
                 return callback(null, false)
             }
+
             if(!validatePass(user, password)) {
                 console.log('Invalid Password');
                 return callback(null, false)
             }
+
             return callback(null, user)
         })
     }
 ));
-// Signup de nuevo usuario
-passport.use('signUp', new LocalStrategy(
+passport.use('signup', new LocalStrategy(
     {passReqToCallback: true}, (req, username, password, callback) => {
         userModel.findOne({ username: username }, (err, user) => {
             if (err) {
@@ -101,35 +103,36 @@ passport.use('signUp', new LocalStrategy(
             })
         })
     }
-))
-
-// RUTAS
-app.use('/cart', routerCart);
-app.use('/', routerProd);
-//  INDEX
-app.get('/session', log.getRoot);
-//  LOGIN
-app.get('/logIn', log.getLogin);
-app.post('/logIn', passport.authenticate('logIn', { failureRedirect: '/failLogIn' }), log.postLogin);
-app.get('/failLogIn', log.getFaillogin);
-//  SIGNUP
-app.get('/signUp', log.getSignup);
-app.post('/signUp', passport.authenticate('signUp', { failureRedirect: '/failSignUp' }), log.postSignup);
-app.get('/failSignUp', log.getFailsignup);
-//  LOGOUT
-app.get('/logOut', log.getLogout);
-// PROFILE
-app.get('/profileUser', log.getProfile);
-app.get('/ruta-protegida', log.checkAuthentication, (req, res) => {
-    res.render('protected')
-});
+));
 //Passport-local
 passport.serializeUser((user, done) => {
     done(null, user._id);
 });
 passport.deserializeUser((id, done) => {
-    user.findById(id, done);
+    userModel.findById(id, done);
 });
+app.get('/productos', routerProd);
+app.get('/carrito', routerCart)
+
+//  SESSION
+app.get('/session', log.getRoot);
+//  LOGIN
+app.get('/login', log.getLogin);
+app.post('/login', passport.authenticate('login', { failureRedirect: '/faillogin' }), log.postLogin);
+app.get('/faillogin', log.getFaillogin);
+//  SIGNUP
+app.get('/signup', log.getSignup);
+app.post('/signup', passport.authenticate('signup', { failureRedirect: '/failsignup' }), log.postSignup);
+app.get('/failsignup', log.getFailsignup);
+//  LOGOUT
+app.get('/logout', log.getLogout);
+// PROFILE
+app.get('/profile', log.getProfile);
+app.get('/ruta-protegida', log.checkAuthentication, (req, res) => {
+    res.render('protected')
+});
+//  FAIL ROUTE
+app.get('*', log.failRoute);
 
 // Mensajería SOCKET.IO
 app.get('/chat', (req, res)=>{
@@ -147,14 +150,9 @@ app.get('/chat', (req, res)=>{
     });
     res.render('chat')
 });
-
 // INFO SISTEMA
 app.get('/info', (req, res)=>{
     res.render('infoSistema', {infoNode: infoNode})
-});
-// Error 404
-app.get('*', (req, res) =>{
-    res.render('routing-err')
 });
 // SERVIDOR ESCUCHANDO
 server.listen(PORT, () => {

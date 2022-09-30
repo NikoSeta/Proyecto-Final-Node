@@ -6,7 +6,10 @@
         <h3>Nombre: <%= ${firstName} %></h3>
         <h3>Apellido: <% ${lastName} %></h3>
         <h3>Email: <$ ${email} %></h3>
-        <button class="btn btn-danger my-5" onclick="logout()">LOGOUT</button>
+        <form action="/session">
+            <button class="btn btn-danger my-5">LOGOUT</button>
+        </form>
+        
     </div>
 </div>
 <%- include('../partials/footer.ejs') %>
